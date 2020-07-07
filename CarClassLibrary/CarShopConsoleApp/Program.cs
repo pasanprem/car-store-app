@@ -23,8 +23,9 @@ namespace CarShopConsoleApp
 
                 switch(action)
                 {
+                    //add item to inventory
                     case 1:
-                        Console.WriteLine("You choose to add a new car to the inventory");
+                        Console.WriteLine("You chose to add a new car to the inventory");
                         string carMake = "";
                         string carModel = "";
                         decimal carPrice = 0;
@@ -44,7 +45,28 @@ namespace CarShopConsoleApp
                         printInventory(s);
                         break;
 
+                    //add to cart
+                    case 2:
+                        Console.WriteLine("You chose to add a car to the shopping cart");
+                        printInventory(s);
+                        Console.WriteLine("Which item would you like to buy? (number)");
+                        int carChosen = int.Parse(Console.ReadLine());
 
+                        s.ShoppingList.Add(s.CarList[carChosen]);
+
+                        printShoppingCart(s);
+
+                        break;
+
+                    //checkout
+                    case 3:
+                        printShoppingCart(s);
+                        Console.WriteLine("The total cost of your items is : " + s.Checkout());
+
+                        break;
+
+                    default:
+                        break;
                 }
 
                 action = chooseAction();
@@ -53,11 +75,21 @@ namespace CarShopConsoleApp
             
         }
 
+        private static void printShoppingCart(Store s)
+        {
+            Console.WriteLine("Cars you have chosen to buy ");
+
+            for (int i = 0; i < s.ShoppingList.Count; i++)
+            {
+                Console.WriteLine("Car # : " + i + " " + s.ShoppingList[i]);
+            }
+        }
+
         private static void printInventory(Store s)
         {
-            foreach (Car c in s.CarList)
+            for (int i = 0; i < s.CarList.Count; i++)
             {
-                Console.WriteLine("Car: " + c);
+                Console.WriteLine("Car # : " + i + " " + s.CarList[i]);
             }
         }
 
