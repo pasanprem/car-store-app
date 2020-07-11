@@ -37,20 +37,39 @@ namespace CarShopGUI
 
         private void btn_addtocart_Click(object sender, EventArgs e)
         {
+            //get the selected item from inventory
+            Car selected = (Car) lst_inventory.SelectedItem;
+
+            //add that item to cart
+            myStore.ShoppingList.Add(selected);
+
+            //update the listbox control
+            cartBindingSource.ResetBindings(false);
+
+            
+
 
         }
 
         private void btn_checkout_Click(object sender, EventArgs e)
         {
+            decimal total = myStore.Checkout();
+            lbl_total.Text = "$" + total.ToString();
 
+            cartBindingSource.ResetBindings(false);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             carInventoryBindingSource.DataSource = myStore.CarList;
 
+            cartBindingSource.DataSource = myStore.ShoppingList;
+
             lst_inventory.DataSource = carInventoryBindingSource;
             lst_inventory.DisplayMember = ToString();
+
+            lst_cart.DataSource = cartBindingSource;
+            lst_cart.DisplayMember = ToString();
         }
     }
 }
